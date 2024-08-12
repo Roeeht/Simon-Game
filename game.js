@@ -11,16 +11,15 @@ $(document).on("keypress", function (event) {
 
     nextSequence();
     started = true;
+    $(".btn").on("click", function () {
+      var userChosenColour = this.id;
+      userClickedPattern.push(userChosenColour);
+      console.log(userClickedPattern);
+      playSound(userChosenColour);
+      animatePress(this.id);
+      nextSequence();
+    });
   }
-});
-
-$(".btn").on("click", function () {
-  var userChosenColour = this.id;
-  userClickedPattern.push(userChosenColour);
-  console.log(userClickedPattern);
-  playSound(userChosenColour);
-  animatePress(this.id);
-  nextSequence();
 });
 
 function nextSequence() {

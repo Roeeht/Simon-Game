@@ -13,7 +13,6 @@ $(document).on("keypress", function (event) {
     $("#level-title").text("level " + level);
     nextSequence();
     started = true;
-    
     $(".btn").on("click", function () {
       console.log("gamePattern.length", gamePattern.length)
       var userChosenColour = this.id;
@@ -23,31 +22,44 @@ $(document).on("keypress", function (event) {
       playSound(userChosenColour);
       animatePress(this.id);
       if (checkAnswer()){
-        console.log(clicksCount, level)
+        console.log("clicksCount: ", clicksCount,"level: ", level)
         if (clicksCount == level) {
-          setTimeout(()=>{nextSequence()}, 1000);
-        }}
+          setTimeout(function(){
+            nextSequence()}, 1000);
+        }
+      }
     });
   }
 });
 
-
+function startOver(){
+  gamePattern = [];
+  userClickedPattern = [];
+  level = 0;
+  started = false;
+  doneSequence = false;
+  clicksCount = 0;
+  console.log("started over")
+}
 
 function checkAnswer(){
-  console.log(gamePattern[clicksCount] )
-  console.log(userClickedPattern[clicksCount] )
+  console.log("clicksCount:", clicksCount)
+  console.log("gamePattern[clicksCount]:", gamePattern[clicksCount] )
+  console.log("userClickedPattern[clicksCount]", userClickedPattern[clicksCount] )
 
   if (gamePattern[clicksCount] != userClickedPattern[clicksCount]){
     playSound("wrong");
-    $("#level-title").text("Game Over, Press Any Key to Restart");  
+    $("#level-title").text("Game Over, Press Any Key to Restart");
     $('body').addClass('game-over')
     setTimeout(function(){
       $('body').removeClass('game-over')
     }, 200)
-    return false
+    startOver()
   }
-  clicksCount++;
-  return true
+  else{
+    clicksCount++;
+    return true
+  }
 }
 
 

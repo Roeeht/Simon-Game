@@ -38,7 +38,12 @@ function checkAnswer(){
   console.log(userClickedPattern[clicksCount] )
 
   if (gamePattern[clicksCount] != userClickedPattern[clicksCount]){
-    $("#level-title").text("Game Over");  
+    playSound("wrong");
+    $("#level-title").text("Game Over, Press Any Key to Restart");  
+    $('body').addClass('game-over')
+    setTimeout(function(){
+      $('body').removeClass('game-over')
+    }, 200)
     return false
   }
   clicksCount++;
